@@ -24,6 +24,12 @@ git clone https://github.com/destinatis/buy-it-now-webpack.git
 npm install
 ```
 
+* Build webpack
+
+```
+npm run build
+```
+
 * Run development server:
 
 ```
