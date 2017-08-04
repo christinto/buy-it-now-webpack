@@ -84,4 +84,4 @@ npm run lint
 Please contribute to the project if you know how to make it better, including this README :)
 
 ### Thanks
-[react-webpack-babel](https://github.com/alicoding/react-webpack-babel.git):
+[react-webpack-babel](https://github.com/alicoding/react-webpack-babel.git)

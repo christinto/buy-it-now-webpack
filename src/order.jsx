@@ -1,72 +1,103 @@
-import Web3 from 'web3';
 import React from 'react';
+
+import Helpers from "../helpers/helpers.js";
+
+var Loader = require('react-loader')
 
 export default class OrderForm extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      value: ''
+      value: '',
+      loaded: true
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-     if (typeof web3 !== 'undefined') {
-          // Use Mist/MetaMask's provider
-          window.web3 = new Web3(web3.currentProvider);
-      } else {
-          console.log('No web3? You should consider trying MetaMask!');
-          // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-          window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-      }
   }
   handleChange(event) {
     this.setState({value: event.target.value});
   }
-
   handleSubmit(event) {
-
-    alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
 
-
-    console.log(window.web3.version);
-    console.log(window.web3.eth.currentProvider);
-
-    if (window.web3.eth.currentProvider.isConnected()) {
-      console.log("connected");
-    } else {
-      console.log("not connected");
-    }
-    window.web3.eth.getAccounts().then(console.log);
-
-    //
-
-    console.log("connect contract START");
-
-    console.log(interfaces);
-
-    var contract = new window.web3.eth.Contract(interfaces.registrarInterface);
-    contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen Pay2Play
-
-    contract.methods.registrarStartDate().call({}, function(error, result) {
-      console.log(error, result);
+    this.setState({
+      loaded: false
     });
 
-    console.log("connect contract END");
-  }
+    console.log(this.state.value);
+    console.log(window.web3.version);
 
+    const amount = window.web3.utils.toWei(0.01, 'ether');
+    const gas = 650000;
+    const gasPrice = window.web3.utils.toWei(20, 'shannon');
+
+    var params = {
+      value: amount,
+      from: window.authorizedAccount,
+      gas: gas,
+      gasPrice: gasPrice
+    };
+
+    window.contract.methods.submitOrderAndMakeDeposit(this.state.value).send(params, Helpers.getTxHandler({
+        onDone: () => {
+          console.log("onDone");
+        },
+        onSuccess: (txid, receipt) => {
+          console.log("onSuccess");
+          console.log(txid, receipt);
+
+          this.setState({
+            loaded: true
+          });
+        },
+        onError: (error) => {
+          console.log("onError");
+
+          this.setState({
+            loaded: true
+          });
+        }
+      })
+    );
+  }
   render() {
+    var options = {
+        lines: 12,
+        length: 5,
+        width: 3,
+        radius: 8,
+        scale: 1.00,
+        corners: 1,
+        color: '#000',
+        opacity: 0.25,
+        rotate: 0,
+        direction: 1,
+        speed: 1,
+        trail: 60,
+        fps: 20,
+        zIndex: 2e9,
+        top: '50%',
+        left: '50%',
+        shadow: false,
+        hwaccel: false,
+        position: 'relative'
+    };
+
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <Loader loaded={this.state.loaded} options={options} parentClassName="orderFormLoader">
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            <input type="text" placeholder="Reference" value={this.state.value} onChange={this.handleChange} />
+          </label>
+          <br />
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
+      </Loader>
     );
   }
 }

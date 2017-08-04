@@ -8,7 +8,9 @@ export default class Web3StatusComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      version: ''
+      version: '',
+      authorizedAccount: 'None',
+      blockNumber: 0
     };
   }
   componentWillMount() {
@@ -29,21 +31,23 @@ export default class Web3StatusComponent extends React.Component {
       console.log("web3 not connected");
     }
 
-    console.log(window.web3.version);
-    console.log(window.web3.eth.currentProvider);
-
     this.setState({version: window.web3.version});
 
-    window.web3.eth.getAccounts().then(console.log);
+    window.web3.eth.getAccounts((err, accounts) => {
+      if (err || !accounts || accounts.length == 0) return;
+      this.setState({authorizedAccount: accounts[0]});
 
-    console.log("connect contract START");
+      window.authorizedAccount = accounts[0];
+    });
 
-    console.log(interfaces);
+    window.web3.eth.getBlockNumber((err, blockNumber) => {
+      this.setState({blockNumber: blockNumber});
+    });
 
-    var contract = new window.web3.eth.Contract(interfaces.registrarInterface);
-    contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen Pay2Play
+    window.contract = new window.web3.eth.Contract(interfaces.registrarInterface);
+    window.contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen Pay2Play
 
-    contract.methods.registrarStartDate().call({}, function(error, result) {
+    window.contract.methods.registrarStartDate().call({}, function(error, result) {
       console.log(error, result);
     });
 
@@ -53,7 +57,9 @@ export default class Web3StatusComponent extends React.Component {
     return (
       <div>
         <p className="highlighted">Web3 Status</p>
-        <p>Version: {this.state.version}</p>
+        <p>Library Version: { this.state.version }</p>
+        <p>Block Number: { this.state.blockNumber }</p>
+        <p>Authorized Account: { this.state.authorizedAccount }</p>
       </div>
     );
   }

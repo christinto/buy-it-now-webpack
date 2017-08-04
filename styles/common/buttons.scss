@@ -1,0 +1,55 @@
+.btn {
+    display: block;
+    height: 2em;
+    width: 2em;
+    background: #046aaa;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 2em;
+    line-height: 2em;
+}
+.btn-primary {
+    background-color: #62cbd5;
+    color: white;
+    height: 5em;
+    width: 20em;
+    border: 0;
+    font-size: 1em;
+    font-family: 'Montserrat', sans-serif !important;
+}
+.btn-secondary {
+    background-color: #046aaa;
+    color: white;
+    height: 5em;
+    width: 20em;
+    border: 0;
+    font-size: 1em;
+    font-family: 'Montserrat', sans-serif !important;
+}
+input[type="submit"] {
+    background-color: #62cbd5;
+    color: #fff;
+    height: 5em;
+    width: 20em;
+    font-size: 1em;
+    border: 0;
+    font-family: 'Montserrat', sans-serif !important;
+}
+input[type="text"] {
+    margin: 0;
+    width: 10em;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 2em;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+}
+input[type="text"]:focus {
+  outline: none;
+}
+.redBg {
+  background-color: red;
+  border-radius: 51px;
+  color: white;
+  padding: 5px;
+}

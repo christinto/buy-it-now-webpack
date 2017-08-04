@@ -1,8 +1,8 @@
 /**
- * @title BuyItNow Smart Contract
- * @url http://buyitnow.international
- * @version 0.1.0
- */
+* @title BuyItNow Smart Contract
+* @url http://buyitnow.international
+* @version 0.1.0
+*/
 
 pragma solidity ^0.4.11;
 
@@ -21,27 +21,27 @@ contract Deposit {
   event BalanceTransfered(address indexed account);
 
   function Deposit(address _owner) payable {
-      owner = _owner;
-      registrar = msg.sender;
-      creationDate = now;
-      active = true;
-      value = msg.value;
+    owner = _owner;
+    registrar = msg.sender;
+    creationDate = now;
+    active = true;
+    value = msg.value;
   }
 
   modifier onlyRegistrar {
-      if (msg.sender != registrar) throw;
-      _;
+    if (msg.sender != registrar) throw;
+    _;
   }
 
   modifier onlyActive {
-      if (!active) throw;
-      _;
+    if (!active) throw;
+    _;
   }
 
   function setRegistrar(address _registrar) onlyRegistrar {
-      registrar = _registrar;
+    registrar = _registrar;
   }
-
+  
   function withdraw(address account) onlyRegistrar {
     account.transfer(this.balance);
 
@@ -51,94 +51,94 @@ contract Deposit {
 
 contract Registrar {
 
-    uint public registrarStartDate;
-    address public node;
-    uint public fee;
+  uint public registrarStartDate;
+  address public node;
+  uint public fee;
 
-    uint constant minPrice = 0.01 ether;
+  uint constant minPrice = 0.01 ether;
 
-    enum Mode { Open, Closed }
+  enum Mode { Open, Closed }
 
-    struct order {
-        uint createdAt;
-        address[] depositors;
-        uint amount;
-        bytes32 referenceHash;
+  struct order {
+    uint createdAt;
+    address[] depositors;
+    uint amount;
+    bytes32 referenceHash;
+  }
+
+  order[] public orders;
+  mapping (address => mapping(uint => Deposit)) public deposits;
+
+  event OrderCreated(uint indexed index, uint createdAt);
+  event NewDeposit(uint indexed index, address indexed account, uint amount);
+
+  function Registrar() {
+    registrarStartDate = now;
+    node = msg.sender;
+  }
+
+  modifier onlyRegistrar {
+    if (msg.sender != node) throw;
+    _;
+  }
+
+  function state(uint index) constant returns (Mode) {
+    var order = orders[index];
+
+    return Mode.Open;
+  }
+
+  modifier inState(uint _index, Mode _state) {
+    if(state(_index) != _state) throw;
+    _;
+  }
+
+  function getOrder(uint index) constant returns (Mode, uint, address[], uint, bytes32) {
+    order o = orders[index];
+
+    address[] memory owners = new address[](o.depositors.length);
+
+    for (uint i = 0; i < o.depositors.length; i++) {
+      owners[i] = o.depositors[i];
     }
 
-    order[] public orders;
-    mapping (address => mapping(uint => Deposit)) public deposits;
+    return (state(index), o.createdAt, owners, o.amount, o.referenceHash);
+  }
 
-    event OrderCreated(uint indexed index, uint createdAt);
-    event NewDeposit(uint indexed index, address indexed account, uint amount);
+  function getOrderCount() public constant returns (uint) {
+    return orders.length;
+  }
 
-    function Registrar() {
-        registrarStartDate = now;
-        node = msg.sender;
-    }
+  function createOrder(bytes32 referenceHash) constant returns (uint) {
+    uint index = orders.length;
 
-    modifier onlyRegistrar {
-        if (msg.sender != node) throw;
-        _;
-    }
+    orders.push(order(now, new address[](0), 0, referenceHash));
 
-    function state(uint index) constant returns (Mode) {
-        var order = orders[index];
+    OrderCreated(index, now);
 
-        return Mode.Open;
-    }
+    return index;
+  }
 
-    modifier inState(uint _index, Mode _state) {
-        if(state(_index) != _state) throw;
-        _;
-    }
+  function newDeposit(uint index) payable {
+    if (msg.value < minPrice) throw;
 
-    function getOrder(uint index) constant returns (Mode, uint, address[], uint, bytes32) {
-        order o = orders[index];
+    if (address(deposits[msg.sender][index]) > 0 ) throw;
 
-        address[] memory owners = new address[](o.depositors.length);
+    Deposit newDeposit = (new Deposit).value(msg.value)(msg.sender);
 
-        for (uint i = 0; i < o.depositors.length; i++) {
-          owners[i] = o.depositors[i];
-        }
+    deposits[msg.sender][index] = newDeposit;
 
-        return (state(index), o.createdAt, owners, o.amount, o.referenceHash);
-    }
+    order o = orders[index];
 
-    function getOrderCount() public constant returns (uint) {
-        return orders.length;
-    }
+    o.depositors.push(msg.sender);
 
-    function createOrder(bytes32 referenceHash) constant returns (uint) {
-        uint index = orders.length;
+    o.amount = o.amount + msg.value;
 
-        orders.push(order(now, new address[](0), 0, referenceHash));
+    NewDeposit(index, msg.sender, msg.value);
+  }
 
-        OrderCreated(index, now);
-
-        return index;
-    }
-
-    function newDeposit(uint index) payable {
-        if (msg.value < minPrice) throw;
-
-        if (address(deposits[msg.sender][index]) > 0 ) throw;
-
-        Deposit newDeposit = (new Deposit).value(msg.value)(msg.sender);
-
-        deposits[msg.sender][index] = newDeposit;
-
-        order o = orders[index];
-
-        o.depositors.push(msg.sender);
-
-        o.amount = o.amount + msg.value;
-
-        NewDeposit(index, msg.sender, msg.value);
-    }
-
-    function submitOrderAndMakeDeposit(bytes32 referenceHash) payable {
-        uint index = createOrder(referenceHash);
-        newDeposit(index);
-    }
+  function submitOrderAndMakeDeposit(bytes32 referenceHash) payable {
+    uint index = createOrder(referenceHash);
+    newDeposit(index);
+  }
 }
