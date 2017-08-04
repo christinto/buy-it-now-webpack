@@ -1,12 +1,15 @@
 # buy-it-now-webpack
-Buy It Now is a Web3.0 Ethereum payments proxy based on React Webpack Babel Starter Kit.
+
+Buy It Now is a Web3.0 Ethereum payments proxy based on React WebPack Babel Starter Kit.
 
 Tired of complicated starters with 200MB of dependencies which are hard to understand and modify?
 
+[React](https://facebook.github.io/react/)
 
-[React](https://facebook.github.io/react/),
-[Webpack](http://webpack.github.io/)
+[WebPack](http://webpack.github.io/)
+
 [Babel](https://babeljs.io/)
+
 [Web3JS](http://web3js.readthedocs.io/en/1.0/)
 
 ### To run
