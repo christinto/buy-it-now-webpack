@@ -80,8 +80,7 @@ npm run lint
 
 ```
 sudo pip install aws-cli
-cd public
-aws s3 sync . s3://buy-it-now/public --acl public-read
+aws s3 sync public s3://buy-it-now/public --acl public-read
 ```
 
 Open `https://buy-it-now.s3.amazonaws.com/public/index.html` in your browser.

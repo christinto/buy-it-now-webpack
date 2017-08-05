@@ -1,0 +1,6 @@
+const ActionTypes = {
+  RETRIEVE_ORDERS: 'RETRIEVE_ORDERS',
+  RETRIEVE_ORDERS_RESPONSE: 'RETRIEVE_ORDERS_RESPONSE',
+};
+
+export default ActionTypes;

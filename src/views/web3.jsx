@@ -2,6 +2,7 @@ import React from 'react';
 import Web3 from 'web3';
 
 import interfaces from "../smart-contract/interfaces.js";
+import ApiUtils from '../helpers/ApiUtils'
 
 export default class Web3StatusComponent extends React.Component {
   constructor(props) {
@@ -22,6 +23,37 @@ export default class Web3StatusComponent extends React.Component {
       // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
       window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
     }
+
+    return null;
+    // API
+    var url = "http://www.hypewizard.com/api/ask_amazon";
+    var params = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: 'Business'
+      })
+    };
+
+    var Api = {
+      getItems: function() {
+        return fetch(url, params)
+          .then(ApiUtils.checkStatus)
+          .then(ApiUtils.parseResponse)
+          .then(function(response) {
+            console.log(response);
+            console.log(response["ItemAttributes"]["Title"]);
+            return response;
+          })
+          .catch(e => e)
+      },
+    };
+
+    Api.getItems();
+    // API
   }
   componentDidMount() {
     if (window.web3.eth.currentProvider.isConnected()) {
@@ -44,7 +76,7 @@ export default class Web3StatusComponent extends React.Component {
     });
 
     window.contract = new window.web3.eth.Contract(interfaces.registrarInterface);
-    window.contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen Pay2Play
+    window.contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen BuyItNow
 
     window.contract.methods.registrarStartDate().call({}, function(error, result) {
       console.log(error, result);

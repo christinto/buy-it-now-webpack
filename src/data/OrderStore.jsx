@@ -2,13 +2,13 @@ import Counter from './Counter';
 import Immutable from 'immutable';
 import Order from './Order';
 import OrderActionTypes from './OrderActionTypes';
-import OrderDispatcher from './OrderDispatcher';
+import AppDispatcher from '../dispatcher/AppDispatcher';
 import {ReduceStore} from 'flux/utils';
 
 
 class OrderStore extends ReduceStore {
   constructor() {
-    super(OrderDispatcher);
+    super(AppDispatcher);
   }
 
   getInitialState() {

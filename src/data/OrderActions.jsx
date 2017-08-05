@@ -1,9 +1,9 @@
 import OrderActionTypes from './OrderActionTypes';
-import OrderDispatcher from './OrderDispatcher';
+import AppDispatcher from '../dispatcher/AppDispatcher';
 
 const Actions = {
   addOrder(text) {
-    OrderDispatcher.dispatch({
+    AppDispatcher.dispatch({
       type: OrderActionTypes.ADD_ORDER,
       text,
     });
@@ -11,8 +11,8 @@ const Actions = {
 
   updateDraft(text) {
     console.log(text);
-    
-    OrderDispatcher.dispatch({
+
+    AppDispatcher.dispatch({
       type: OrderActionTypes.UPDATE_DRAFT,
       text,
     });

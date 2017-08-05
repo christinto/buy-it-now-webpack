@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Helpers from "../helpers/helpers.js";
+import Helpers from "../helpers/TransactionUtils.js";
 
 var Loader = require('react-loader')
 

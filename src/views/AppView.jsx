@@ -2,16 +2,26 @@ import React from 'react';
 import '../../styles/index.scss';
 
 import Web3StatusComponent from './web3'
+
+import Search from '../components/Search'
+import Transactions from '../components/Transactions'
 import OrderForm from './order'
+
+import SearchActions from '../actions/SearchActions';
 
 function AppView(props) {
   return (
     <div>
       <Header {...props} />
-      <NewOrder {...props} />
+
+      <SearchForm />
+      <Search />
+
       <Main {...props} />
       <OrderForm />
       <Web3StatusComponent />
+
+      <Transactions />
     </div>
   );
 }
@@ -64,7 +74,7 @@ function Main(props) {
 
   return (
     <section id="main">
-      <ul id="todo-list">
+      <ul id="order-list">
         {[...props.orders.values()].reverse().map(order => (
           <OrderItem
             key={order.id}
@@ -89,6 +99,26 @@ function OrderItem(props) {
         </label>
       </div>
     </li>
+  );
+}
+
+function SearchForm() {
+  const onKeyDown = (event) => {
+    if (event.keyCode === ENTER_KEY_CODE) {
+      SearchActions.findItems(event.target.value);
+    }
+  };
+  return (
+    <div>
+      <input
+        type="text"
+        autoFocus={true}
+        id="new-query"
+        placeholder="Enter Query"
+        onKeyDown={onKeyDown}
+      />
+      <br />
+    </div>
   );
 }
 

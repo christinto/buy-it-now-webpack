@@ -1,10 +1,10 @@
 import {ReduceStore} from 'flux/utils';
 import OrderActionTypes from './OrderActionTypes';
-import OrderDispatcher from './OrderDispatcher';
+import AppDispatcher from '../dispatcher/AppDispatcher';
 
 class OrderDraftStore extends ReduceStore {
   constructor() {
-    super(OrderDispatcher);
+    super(AppDispatcher);
   }
 
   getInitialState() {
