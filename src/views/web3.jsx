@@ -1,6 +1,5 @@
 import React from 'react';
 import Web3 from 'web3';
-import '../styles/index.scss';
 
 import interfaces from "../smart-contract/interfaces.js";
 

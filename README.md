@@ -18,7 +18,7 @@ Tired of complicated starters with 200MB of dependencies which are hard to under
 * Fork and clone the project:
 
 ```
-git clone https://github.com/destinatis/buy-it-now-webpack.git
+git clone https://github.com/disruptivewidgets/buy-it-now-webpack.git
 ```
 
 * Then install the dependencies:
@@ -75,6 +75,16 @@ To run linting, run:
 ```
 npm run lint
 ```
+
+### S3 Hosting Example
+
+```
+sudo pip install aws-cli
+cd public
+aws s3 sync . s3://buy-it-now/public --acl public-read
+```
+
+Open `https://buy-it-now.s3.amazonaws.com/public/index.html` in your browser.
 
 ### Notes on importing css styles
 * styles having /src/ in their absolute path considered part of the application and exported as local css modules.

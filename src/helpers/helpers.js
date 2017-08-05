@@ -46,6 +46,7 @@ Helpers.getTxHandler = function({onDone, onSuccess, onError}) {
       return reportError(err);
     }
     console.log('Tx: ' + txid);
+    
     Helpers.checkTxSuccess(txid, (err, receipt) => {
       if (err) {
         return reportError(err);
