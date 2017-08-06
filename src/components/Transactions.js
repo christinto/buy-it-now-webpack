@@ -23,7 +23,7 @@ var Transactions = React.createClass({
   render: function() {
     return (
       <div>
-        <p>Transactions</p>
+        <p className="highlighted">Transactions</p>
         {this.state.list.map(item => (
           <TransactionItem
             key={item.id}

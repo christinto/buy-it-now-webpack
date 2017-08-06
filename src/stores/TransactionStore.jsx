@@ -39,8 +39,6 @@ AppDispatcher.register(function(payload) {
 
         var transactions = _.map(action.response, function(transaction) {
 
-          console.log(transaction);
-
           const id = TransactionCounter.increment();
 
           return new Transaction({

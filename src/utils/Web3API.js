@@ -57,8 +57,6 @@ module.exports = {
     contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen BuyItNow
 
     contract.methods.getOrderCount().call({}, function(error, result) {
-      console.log(error, result);
-
       var index = result - 1;
 
       var orderIndices = Array.from({length: result}, (v, k) => k);
@@ -69,7 +67,6 @@ module.exports = {
           return - (order.date.getTime());
         });
 
-        console.log(sorted);
         Web3ServerActions.retrieveTransactions(sorted);
       }
 

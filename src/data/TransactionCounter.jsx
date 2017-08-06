@@ -1,8 +1,5 @@
 let _counter = 1;
 
-/**
- * This is a simple counter for providing unique ids.
- */
 const TransactionCounter = {
   increment() {
     return 'id-' + String(_counter++);

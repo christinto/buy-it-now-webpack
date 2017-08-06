@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchResultStore from '../stores/SearchResultStore';
+import ProductActions from '../actions/ProductActions';
 
 var Search = React.createClass({
   getInitialState: function() {
@@ -21,7 +22,7 @@ var Search = React.createClass({
   render: function() {
     return (
       <div>
-        <p>Search Results</p>
+        <p className="highlighted">Search Results</p>
         {this.state.list.map(item => (
           <SearchResultItem
             key={item.id}
@@ -35,11 +36,18 @@ var Search = React.createClass({
 
 function SearchResultItem(props) {
   const {item} = props;
+
+  const onClick = (event) => {
+    console.log("clicked");
+    console.log(item);
+    ProductActions.addToCart(item);
+  };
+
   return (
     <li>
       <div>
         <label>
-          {item.title}
+          {item.title} <button onClick={onClick}/>
         </label>
       </div>
     </li>

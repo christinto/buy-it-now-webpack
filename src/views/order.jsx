@@ -88,16 +88,18 @@ export default class OrderForm extends React.Component {
     };
 
     return (
-      <Loader loaded={this.state.loaded} options={options} parentClassName="orderFormLoader">
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            <input type="text" placeholder="Reference" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <br />
-          <br />
-          <input type="submit" value="Submit" />
-        </form>
-      </Loader>
+      <div>
+        <Loader loaded={this.state.loaded} options={options} parentClassName="orderFormLoader">
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              <input type="text" placeholder="Reference" value={this.state.value} onChange={this.handleChange} />
+            </label>
+            <br />
+            <br />
+            <input type="submit" value="Submit" />
+          </form>
+        </Loader>
+    </div>
     );
   }
 }

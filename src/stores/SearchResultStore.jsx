@@ -44,27 +44,13 @@ AppDispatcher.register(function(payload) {
   switch(action.actionType) {
     case SearchActionTypes.GET_RANDOM_RESPONSE:
 
-      // Construct the new todo string
-      // var newTodo = 'Call '
-      //   + action.response.results[0].user.name.first
-      //   + ' about real estate in '
-      //   + action.response.results[0].user.location.city;
-
-      // Add the new todo to the list
-
       var title = action.response.results["ItemAttributes"]["Title"];
-
 
       _store.list.push(title);
       SearchResultStore.emit(CHANGE_EVENT);
       break;
     case SearchActionTypes.FIND_ITEMS_RESPONSE:
-
-        console.log(action.response.results);
-
         var searchResults = _.map(action.response.results, function(searchResult) {
-
-          console.log(searchResult["ItemAttributes"]["Title"]);
 
           const id = SearchResultCounter.increment();
 
@@ -75,9 +61,6 @@ AppDispatcher.register(function(payload) {
         });
 
         _store.list = searchResults;
-        // _store.list = _.map(action.response.results, function(result) {
-        //   return result["ItemAttributes"]["Title"];
-        // });
 
         SearchResultStore.emit(CHANGE_EVENT);
         break;

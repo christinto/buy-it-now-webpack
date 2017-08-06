@@ -1,9 +1,9 @@
 let _counter = 1;
 
-const SearchResultCounter = {
+const ShoppingCartItemCounter = {
   increment() {
     return 'id-' + String(_counter++);
   },
 };
 
-export default SearchResultCounter;
+export default ShoppingCartItemCounter;
