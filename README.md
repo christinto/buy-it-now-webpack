@@ -83,7 +83,7 @@ sudo pip install aws-cli
 aws s3 sync public s3://buy-it-now/public --acl public-read
 ```
 
-Open `https://buy-it-now.s3.amazonaws.com/public/index.html` in your browser.
+Open `http://buy-it-now.s3.amazonaws.com/public/index.html` in your browser.
 
 ### Notes on importing css styles
 * styles having /src/ in their absolute path considered part of the application and exported as local css modules.
