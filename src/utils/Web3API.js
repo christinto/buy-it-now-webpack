@@ -1,7 +1,6 @@
 var Web3ServerActions = require('../actions/Web3ServerActions');
 var request = require('superagent');
 
-import Web3 from 'web3';
 import interfaces from "../smart-contract/interfaces.js";
 
 function retrieveOrder(index, callback) {
@@ -52,7 +51,6 @@ function eachAsync(array, f, callback) {
 
 module.exports = {
   retrieveTransactions: function() {
-
     var contract = new window.web3.eth.Contract(interfaces.registrarInterface);
     contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen BuyItNow
 

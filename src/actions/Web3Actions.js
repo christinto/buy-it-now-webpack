@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import Web3ActionTypes from '../constants/Web3ActionTypes';
 import Web3API from '../utils/Web3API';
+import OrderAPI from '../utils/OrderAPI';
 
 const Actions = {
   retrieveTransactions() {
@@ -9,6 +10,7 @@ const Actions = {
     });
 
     Web3API.retrieveTransactions();
+    OrderAPI.prepareOrder();
   }
 }
 

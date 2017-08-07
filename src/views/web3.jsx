@@ -25,6 +25,7 @@ export default class Web3StatusComponent extends React.Component {
     }
 
     return null;
+
     // API
     var url = "http://www.hypewizard.com/api/ask_amazon";
     var params = {
@@ -69,6 +70,15 @@ export default class Web3StatusComponent extends React.Component {
       this.setState({authorizedAccount: accounts[0]});
 
       window.authorizedAccount = accounts[0];
+
+      // window.web3.eth.personal.unlockAccount(accounts[0]);
+      //
+      // window.web3.eth.personal.sign("test", accounts[0]).then(console.log);
+      //
+      // mist.requestAccount(function(e, address) {
+      //   console.log(address);
+      // });
+
     });
 
     window.web3.eth.getBlockNumber((err, blockNumber) => {

@@ -34,3 +34,5 @@ public
 
 # Ignore yarn files
 yarn.lock
+
+keys
