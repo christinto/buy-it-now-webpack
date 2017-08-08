@@ -17,7 +17,6 @@ var Transactions = React.createClass({
     TransactionStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    console.log(TransactionStore.getList());
     this.setState(TransactionStore.getList());
   },
   render: function() {

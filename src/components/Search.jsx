@@ -16,7 +16,6 @@ var Search = React.createClass({
     SearchResultStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    console.log("SearchResultStore", SearchResultStore.getList());
     this.setState(SearchResultStore.getList());
   },
   render: function() {
@@ -38,8 +37,6 @@ function SearchResultItem(props) {
   const {item} = props;
 
   const onClick = (event) => {
-    console.log("clicked");
-    console.log(item);
     ProductActions.addToCart(item);
   };
 
@@ -47,7 +44,7 @@ function SearchResultItem(props) {
     <li>
       <div>
         <label>
-          {item.title} <button onClick={onClick}/>
+          {item.title} <button onClick={onClick}>Add to Cart</button>
         </label>
       </div>
     </li>

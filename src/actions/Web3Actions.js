@@ -10,7 +10,7 @@ const Actions = {
     });
 
     Web3API.retrieveTransactions();
-    OrderAPI.prepareOrder();
+    // OrderAPI.prepareOrder();
   }
 }
 

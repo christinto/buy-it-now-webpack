@@ -2,7 +2,7 @@ import React from 'react';
 
 import Helpers from "../helpers/TransactionUtils.js";
 
-var Loader = require('react-loader')
+var Loader = require('react-loader');
 
 export default class OrderForm extends React.Component {
   constructor(props) {
@@ -89,6 +89,8 @@ export default class OrderForm extends React.Component {
 
     return (
       <div>
+        <p className="highlighted">Payment</p>
+
         <Loader loaded={this.state.loaded} options={options} parentClassName="orderFormLoader">
           <form onSubmit={this.handleSubmit}>
             <label>
@@ -96,7 +98,7 @@ export default class OrderForm extends React.Component {
             </label>
             <br />
             <br />
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Pay" />
           </form>
         </Loader>
     </div>

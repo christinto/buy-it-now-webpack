@@ -2,7 +2,9 @@ import Immutable from 'immutable';
 
 const ShoppingCartItem = Immutable.Record({
   id: '',
-  title: ''
+  asin: '',
+  title: '',
+  quantity: 0
 });
 
 export default ShoppingCartItem;

@@ -10,8 +10,6 @@ const Actions = {
   },
 
   updateDraft(text) {
-    console.log(text);
-
     AppDispatcher.dispatch({
       type: OrderActionTypes.UPDATE_DRAFT,
       text,

@@ -54,9 +54,14 @@ AppDispatcher.register(function(payload) {
 
           const id = SearchResultCounter.increment();
 
+          // console.log(searchResult);
+
           return new SearchResult({
             id,
-            title: searchResult["ItemAttributes"]["Title"]
+            title: searchResult["ItemAttributes"]["Title"],
+            asin:  searchResult["ASIN"],
+            price: 0,
+            stock: 0
           })
         });
 

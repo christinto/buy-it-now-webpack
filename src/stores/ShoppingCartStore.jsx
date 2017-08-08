@@ -11,14 +11,10 @@ var EventEmitter = require('events').EventEmitter;
 
 var CHANGE_EVENT = 'change';
 
-// Define the store as an empty array
 var _store = {
   list: []
 };
 
-// Define the public event listeners and getters that
-// the views will use to listen for changes and retrieve
-// the store
 var ShoppingCartStore = ObjectAssign({}, EventEmitter.prototype, {
 
   addChangeListener: function(cb) {
@@ -31,12 +27,13 @@ var ShoppingCartStore = ObjectAssign({}, EventEmitter.prototype, {
 
   getList: function() {
     return _store;
+  },
+
+  getDataStore: function() {
+    return _store;
   }
 });
 
-// Register each of the actions with the dispatcher
-// by changing the store's data and emitting a
-// change
 AppDispatcher.register(function(payload) {
 
   var action = payload.action;
@@ -44,19 +41,17 @@ AppDispatcher.register(function(payload) {
   switch(action.actionType) {
     case ShoppingCartActionTypes.ADD_QUANTITY:
 
-      // var title = action.response.results["ItemAttributes"]["Title"];
-      //
-      //
-
+      var asin = action.response.asin;
       var title = action.response.title;
-
-      console.log(title);
+      var quantity = 1;
 
       const id = ShoppingCartItemCounter.increment();
 
       var shoppingCartItem = new ShoppingCartItem({
         id,
-        title: title
+        title: title,
+        asin: asin,
+        quantity: quantity
       });
 
       _store.list.push(shoppingCartItem);

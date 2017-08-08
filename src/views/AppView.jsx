@@ -106,6 +106,9 @@ function OrderItem(props) {
 }
 
 function SearchForm() {
+
+  SearchActions.findItems("Bitcoin");
+
   const onKeyDown = (event) => {
     if (event.keyCode === ENTER_KEY_CODE) {
       SearchActions.findItems(event.target.value);
@@ -118,6 +121,7 @@ function SearchForm() {
         autoFocus={true}
         id="new-query"
         placeholder="Enter Query"
+        defaultValue="Bitcoin"
         onKeyDown={onKeyDown}
       />
       <br />

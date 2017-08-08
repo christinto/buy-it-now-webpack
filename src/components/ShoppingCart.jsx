@@ -1,5 +1,8 @@
 import React from 'react';
 import ShoppingCartStore from '../stores/ShoppingCartStore';
+import ShoppingCartActions from '../actions/ShoppingCartActions';
+
+import {Loader} from 'react-loader';
 
 var ShoppingCart = React.createClass({
   getInitialState: function() {
@@ -15,10 +18,15 @@ var ShoppingCart = React.createClass({
     ShoppingCartStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    console.log(ShoppingCartStore.getList());
     this.setState(ShoppingCartStore.getList());
   },
   render: function() {
+
+    const onClick = (event) => {
+      var dataStore = ShoppingCartStore.getDataStore();
+      ShoppingCartActions.prepareOrder(dataStore);
+    };
+
     return (
       <div>
         <p className="highlighted">Shopping Cart</p>
@@ -28,6 +36,7 @@ var ShoppingCart = React.createClass({
             item={item}
           />
         ))}
+        <button className="btn-primary" onClick={onClick}>Process Order</button>
       </div>
     );
   }

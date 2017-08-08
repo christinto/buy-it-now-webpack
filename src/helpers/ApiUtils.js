@@ -9,7 +9,6 @@ var ApiUtils = {
     }
   },
   parseResponse: function(response) {
-    console.log(response.json());
     return response.json();
   }
 };
