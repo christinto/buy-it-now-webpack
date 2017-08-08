@@ -5,9 +5,11 @@ import Web3StatusComponent from './web3'
 
 import Search from '../components/Search'
 import Transactions from '../components/Transactions'
+import Checkout from '../components/Checkout';
 import ShoppingCart from '../components/ShoppingCart';
 
-import OrderForm from './order'
+
+import OrderForm from '../components/Order'
 
 import SearchActions from '../actions/SearchActions';
 
@@ -20,6 +22,9 @@ function AppView(props) {
       <Search />
 
       <ShoppingCart />
+
+      <Checkout />
+
       <Main {...props} />
       <OrderForm />
       <Web3StatusComponent />

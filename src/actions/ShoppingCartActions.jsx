@@ -7,7 +7,7 @@ import OrderAPI from '../utils/OrderAPI';
 const Actions = {
   addToCart(item) {
     AppDispatcher.handleViewAction({
-      actionType: ShoppingCartActionTypes.ADD_TO_CART,
+      actionType: ShoppingCartActionTypes.ADD_QUANTITY,
     });
   },
   prepareOrder(dataStore) {

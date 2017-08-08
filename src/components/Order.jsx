@@ -10,7 +10,8 @@ export default class OrderForm extends React.Component {
 
     this.state = {
       value: '',
-      loaded: true
+      loaded: true,
+      swarmHash: ''
     };
 
     this.handleChange = this.handleChange.bind(this);

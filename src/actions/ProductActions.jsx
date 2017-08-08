@@ -8,7 +8,7 @@ const Actions = {
       actionType: ProductActionTypes.ADD_TO_CART,
     });
 
-    ProductAPI.checkQuantity(item);
+    ProductAPI.addToCart(item);
   }
 }
 

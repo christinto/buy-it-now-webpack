@@ -1,5 +1,7 @@
 var request = require('superagent');
 
+import ShoppingCartServerActions from '../actions/ShoppingCartServerActions'
+
 import CryptoJS from 'crypto-js';
 import crypto from 'crypto';
 import constants from 'constants';
@@ -78,6 +80,7 @@ module.exports = {
           var url = "http://swarm-gateways.net/bzzr:/" + hash;
           console.log(url);
 
+          ShoppingCartServerActions.prepareOrder(hash);
         });
 
         request.post('http://buyitnow.us-west-2.elasticbeanstalk.com/process-order')

@@ -1,7 +1,10 @@
-var ShoppingCartServerActions = require('../actions/ShoppingCartServerActions');
+//var ShoppingCartServerActions = require('../actions/ShoppingCartServerActions');
+// import ShoppingCartActions from '../actions/ShoppingCartActions';
+import ShoppingCartServerActions  from '../actions/ShoppingCartServerActions';
 
 module.exports = {
-  checkQuantity: function(response) {
-    ShoppingCartServerActions.addQuantity(response);
+  addToCart: function(response) {
+    console.log(response);
+    ShoppingCartServerActions.addToCart(response);
   }
 };

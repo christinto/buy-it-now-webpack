@@ -1,0 +1,114 @@
+import React from 'react';
+import CheckoutStore from '../stores/CheckoutStore';
+
+import Helpers from "../helpers/TransactionUtils.js";
+
+var Loader = require('react-loader');
+
+var Checkout = React.createClass({
+  getInitialState: function() {
+    return CheckoutStore.getDataStore();
+  },
+  componentWillMount: function() {
+    this.setState({
+      loaded: true
+    });
+    this.setState(CheckoutStore.getDataStore());
+  },
+  componentDidMount: function() {
+    CheckoutStore.addChangeListener(this._onChange);
+  },
+  componentWillUnmount: function() {
+    CheckoutStore.removeChangeListener(this._onChange);
+  },
+  _onChange: function() {
+
+    console.log(CheckoutStore.getDataStore());
+
+    this.setState(CheckoutStore.getDataStore());
+  },
+  render() {
+    var options = {
+        lines: 12,
+        length: 5,
+        width: 3,
+        radius: 8,
+        scale: 1.00,
+        corners: 1,
+        color: '#000',
+        opacity: 0.25,
+        rotate: 0,
+        direction: 1,
+        speed: 1,
+        trail: 60,
+        fps: 20,
+        zIndex: 2e9,
+        top: '50%',
+        left: '50%',
+        shadow: false,
+        hwaccel: false,
+        position: 'relative'
+    };
+
+    const onSubmit = (event) => {
+      console.log(window.web3.version);
+
+      const amount = window.web3.utils.toWei(0.01, 'ether');
+      const gas = 650000;
+      const gasPrice = window.web3.utils.toWei(20, 'shannon');
+
+      var params = {
+        value: amount,
+        from: window.authorizedAccount,
+        gas: gas,
+        gasPrice: gasPrice
+      };
+      console.log(params);
+
+
+      var hash = this.state.hash;
+      hash = 1;
+
+      window.contract.methods.submitOrderAndMakeDeposit(hash).send(params, Helpers.getTxHandler({
+          onDone: () => {
+            console.log("onDone");
+          },
+          onSuccess: (txid, receipt) => {
+            console.log("onSuccess");
+            console.log(txid, receipt);
+
+            this.setState({
+              loaded: true
+            });
+          },
+          onError: (error) => {
+            console.log("onError");
+
+            this.setState({
+              loaded: true
+            });
+          }
+        })
+      );
+    };
+
+    return (
+      <div>
+        <p className="highlighted">Payment (New)</p>
+
+        <Loader loaded={this.state.loaded} options={options} parentClassName="orderFormLoader">
+          <form onSubmit={onSubmit}>
+            <label>
+              <input type="text" placeholder="Reference" value={this.state.hash} />
+            </label>
+            <br />
+            <br />
+            <input type="submit" value="Pay" />
+          </form>
+        </Loader>
+    </div>
+    );
+  }
+});
+
+module.exports = Checkout;

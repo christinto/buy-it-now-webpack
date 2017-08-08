@@ -39,7 +39,7 @@ AppDispatcher.register(function(payload) {
   var action = payload.action;
 
   switch(action.actionType) {
-    case ShoppingCartActionTypes.ADD_QUANTITY:
+    case ShoppingCartActionTypes.ADD_TO_CART_RESPONSE:
 
       var asin = action.response.asin;
       var title = action.response.title;
