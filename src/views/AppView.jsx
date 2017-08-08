@@ -8,9 +8,6 @@ import Transactions from '../components/Transactions'
 import Checkout from '../components/Checkout';
 import ShoppingCart from '../components/ShoppingCart';
 
-
-import OrderForm from '../components/Order'
-
 import SearchActions from '../actions/SearchActions';
 
 function AppView(props) {
@@ -26,7 +23,6 @@ function AppView(props) {
       <Checkout />
 
       <Main {...props} />
-      <OrderForm />
       <Web3StatusComponent />
 
       <Transactions />

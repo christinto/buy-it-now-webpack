@@ -40,7 +40,7 @@ function TransactionItem(props) {
     <li>
       <div>
         <label>
-          {item.index} | {item.state} | {item.date} | {item.amount}
+          {item.index} | {item.state} | {item.date} | {item.amount} | {item.referenceHash}
         </label>
       </div>
     </li>

@@ -51,6 +51,7 @@ function ShoppingCartItem(props) {
           {item.title}
         </label>
       </div>
+      <br />
     </li>
   );
 }

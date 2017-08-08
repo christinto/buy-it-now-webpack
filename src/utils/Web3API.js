@@ -23,11 +23,14 @@ function retrieveOrder(index, callback) {
 
     var date = new Date(result[1] * 1000);
 
+    console.log("result", result);
+
     var order = {
       index: index,
       state: state,
       date: date,
-      amount: result[2].toString(),
+      amount: result[3],
+      referenceHash: result[4].toString()
     };
 
     callback(order);

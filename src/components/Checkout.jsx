@@ -50,7 +50,13 @@ var Checkout = React.createClass({
         position: 'relative'
     };
 
+    // const onChange = (event) => {
+    //     this.setState({value: event.target.value});
+    // };
+
     const onSubmit = (event) => {
+
+      event.preventDefault();
       console.log(window.web3.version);
 
       const amount = window.web3.utils.toWei(0.01, 'ether');
@@ -65,11 +71,14 @@ var Checkout = React.createClass({
       };
       console.log(params);
 
+      // var hash = this.state.hash;
+      //
+      // console.log("hash", hash);
+      // console.log(typeof(this.state.hash));
+      //
+      // hash = 'd3ba5f21813ef1002930ba5c0c01f2f54236717e1f7a254354ac81a7d0bbfd53';
 
-      var hash = this.state.hash;
-      hash = 1;
-
-      window.contract.methods.submitOrderAndMakeDeposit(hash).send(params, Helpers.getTxHandler({
+      window.contract.methods.submitOrderAndMakeDeposit(this.state.hash).send(params, Helpers.getTxHandler({
           onDone: () => {
             console.log("onDone");
           },
@@ -94,7 +103,7 @@ var Checkout = React.createClass({
 
     return (
       <div>
-        <p className="highlighted">Payment (New)</p>
+        <p className="highlighted">Payment</p>
 
         <Loader loaded={this.state.loaded} options={options} parentClassName="orderFormLoader">
           <form onSubmit={onSubmit}>

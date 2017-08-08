@@ -46,7 +46,8 @@ AppDispatcher.register(function(payload) {
             index: transaction.index,
             state: transaction.state,
             date: transaction.date.toString(),
-            amount: transaction.amount
+            amount: transaction.amount,
+            referenceHash: transaction.referenceHash
           })
         });
 

@@ -92,15 +92,5 @@ module.exports = {
             console.log(response);
           });
     });
-
-    // decrypt payload
-    // var payload = encrypt({"order_id":1}, publicKey);
-    // console.log(payload);
-    //
-    // decrypt(payload);
-    // // decrypt payload
-    //
-
-    // Web3ServerActions.retrieveTransactions(sorted);
   }
 };
