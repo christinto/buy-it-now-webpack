@@ -43,6 +43,7 @@ AppDispatcher.register(function(payload) {
 
       var asin = action.response.asin;
       var title = action.response.title;
+      var price = action.response.price;
       var quantity = 1;
 
       const id = ShoppingCartItemCounter.increment();
@@ -51,7 +52,8 @@ AppDispatcher.register(function(payload) {
         id,
         title: title,
         asin: asin,
-        quantity: quantity
+        quantity: quantity,
+        price: price
       });
 
       _store.list.push(shoppingCartItem);

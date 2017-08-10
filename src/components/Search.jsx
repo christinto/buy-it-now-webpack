@@ -40,11 +40,17 @@ function SearchResultItem(props) {
     ProductActions.addToCart(item);
   };
 
+  let button = '';
+
+  if (item.price > 0) {
+    button = <button onClick={onClick}>Add to Cart</button>;
+  }
+
   return (
     <li>
       <div>
         <label>
-          {item.title} <button onClick={onClick}>Add to Cart</button>
+          {item.title} {button}
         </label>
       </div>
     </li>

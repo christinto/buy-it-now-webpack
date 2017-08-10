@@ -2,6 +2,7 @@ import React from 'react';
 import ShoppingCartStore from '../stores/ShoppingCartStore';
 import ShoppingCartActions from '../actions/ShoppingCartActions';
 
+import _ from 'lodash';
 import {Loader} from 'react-loader';
 
 var ShoppingCart = React.createClass({
@@ -27,6 +28,11 @@ var ShoppingCart = React.createClass({
       ShoppingCartActions.prepareOrder(dataStore);
     };
 
+    var subtotal = 0;
+    _.each(this.state.list, function(item) {
+      subtotal += item.get('price');
+    });
+
     return (
       <div>
         <p className="highlighted">Shopping Cart</p>
@@ -36,7 +42,8 @@ var ShoppingCart = React.createClass({
             item={item}
           />
         ))}
-        <button className="btn-primary" onClick={onClick}>Process Order</button>
+        <h2>Subtotal: {subtotal}</h2>
+        <button className="btn-primary" onClick={onClick}>Submit Order</button>
       </div>
     );
   }
@@ -48,7 +55,7 @@ function ShoppingCartItem(props) {
     <li>
       <div>
         <label>
-          {item.title}
+          {item.title} | {item.quantity} | {item.price}
         </label>
       </div>
       <br />

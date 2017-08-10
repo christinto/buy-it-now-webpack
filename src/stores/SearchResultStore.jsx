@@ -56,11 +56,21 @@ AppDispatcher.register(function(payload) {
 
           // console.log(searchResult);
 
+          var price = 0;
+          try {
+            // console.log(searchResult["OfferSummary"]["LowestNewPrice"]["Amount"]);
+            price = parseInt(searchResult["OfferSummary"]["LowestNewPrice"]["Amount"]);
+          }
+          catch (e) {
+            //  console.error(e);
+            price = 0;
+          }
+
           return new SearchResult({
             id,
             title: searchResult["ItemAttributes"]["Title"],
             asin:  searchResult["ASIN"],
-            price: 0,
+            price: price,
             stock: 0
           })
         });
