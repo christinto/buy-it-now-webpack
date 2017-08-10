@@ -41,7 +41,7 @@ contract Deposit {
   function setRegistrar(address _registrar) onlyRegistrar {
     registrar = _registrar;
   }
-  
+
   function withdraw(address account) onlyRegistrar {
     account.transfer(this.balance);
 
@@ -69,7 +69,7 @@ contract Registrar {
   order[] public orders;
   mapping (address => mapping(uint => Deposit)) public deposits;
 
-  event OrderCreated(uint indexed index, uint createdAt);
+  event OrderCreated(uint indexed index, bytes32 indexed referenceHash);
   event NewDeposit(uint indexed index, address indexed account, uint amount);
 
   function Registrar() {
@@ -114,7 +114,7 @@ contract Registrar {
 
     orders.push(order(now, new address[](0), 0, referenceHash));
 
-    OrderCreated(index, now);
+    OrderCreated(index, referenceHash);
 
     return index;
   }

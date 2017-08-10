@@ -86,7 +86,7 @@ export default class Web3StatusComponent extends React.Component {
     });
 
     window.contract = new window.web3.eth.Contract(interfaces.registrarInterface);
-    window.contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen BuyItNow
+    window.contract.options.address = "0x59b18ece115c3a9c8131e41a5da89b570f6de55e"; // Ropsen BuyItNow
 
     window.contract.methods.registrarStartDate().call({}, function(error, result) {
       console.log(error, result);

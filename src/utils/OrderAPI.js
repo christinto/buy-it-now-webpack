@@ -9,19 +9,32 @@ import constants from 'constants';
 var chars ="0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz*&-%/!?*+=()";
 
 var generateKey = function generateKey(keyLength){
-  var randomstring = '';
+  var randomString = '';
 
   for (var i=0; i < keyLength; i++) {
     var rnum = Math.floor(Math.random() * chars.length);
-    randomstring += chars.substring(rnum,rnum+1);
+    randomString += chars.substring(rnum, rnum+1);
   }
-  return randomstring;
+
+  localStorage.setItem('key', randomString)
+
+  return randomString;
 };
 
 var encrypt = function encrypt(dataObject, publicKey) {
-
   // Create a new encryption key (with a specified length)
-  var key = generateKey(50);
+
+  var key;
+  if (localStorage.getItem('key') === null) {
+    console.log('key not detected');
+    key = generateKey(64);
+  } else {
+    console.log('key detected');
+    key = localStorage.getItem('key');
+  }
+
+  console.log(key);
+
   // convert data to a json string
   var dataAsString = JSON.stringify(dataObject);
   // encrypt the data symmetrically
@@ -51,46 +64,56 @@ var encrypt = function encrypt(dataObject, publicKey) {
 
   return payload;
 };
+function uploadPayload(order) {
 
+  var publicKey = localStorage.getItem('publicKey');
+  var identifier = localStorage.getItem('identifier');
+
+  var payload = {
+    order: order,
+    identifier: identifier
+  };
+
+  var encryptedPayload = encrypt(payload, publicKey);
+
+  console.log(encryptedPayload);
+
+  window.web3.bzz.setProvider("http://swarm-gateways.net");
+  // window.web3.bzz.setProvider("http://swrm.io");
+
+  window.web3.bzz.upload(encryptedPayload).then(function(hash) {
+    console.log("upload", hash);
+
+    var url = "http://swarm-gateways.net/bzzr:/" + hash;
+    console.log(url);
+
+    ShoppingCartServerActions.prepareOrder(hash);
+  });
+};
 module.exports = {
   submitOrder: function(order) {
+    if (localStorage.getItem('publicKey') === null || localStorage.getItem('identifier') === null) {
+      request.get('http://buyitnow.us-west-2.elasticbeanstalk.com/public-key')
+        .end(function(err, response) {
+          if (err) return console.error(err);
 
-    request.get('http://buyitnow.us-west-2.elasticbeanstalk.com/public-key')
-      .end(function(err, response) {
-        if (err) return console.error(err);
+          // console.log(JSON.parse(response.text));
 
-        // console.log(JSON.parse(response.text));
+          var jsonObject = JSON.parse(response.text);
 
-        var jsonObject = JSON.parse(response.text);
+          var publicKey = jsonObject['key'];
+          var identifier = jsonObject['identifier'];
 
-        console.log(jsonObject['key']);
+          console.log("publicKey: ", publicKey);
+          console.log("identifier: ", identifier);
 
-        var payload = order;
+          localStorage.setItem('publicKey', publicKey);
+          localStorage.setItem('identifier', identifier);
 
-        var encryptedPayload = encrypt(payload, jsonObject['key']);
-
-        console.log(encryptedPayload);
-
-        window.web3.bzz.setProvider("http://swarm-gateways.net");
-        // window.web3.bzz.setProvider("http://swrm.io");
-
-        window.web3.bzz.upload(encryptedPayload).then(function(hash) {
-          console.log("upload", hash);
-
-          var url = "http://swarm-gateways.net/bzzr:/" + hash;
-          console.log(url);
-
-          ShoppingCartServerActions.prepareOrder(hash);
-        });
-
-        request.post('http://buyitnow.us-west-2.elasticbeanstalk.com/process-order')
-          .set('Accept', 'application/json')
-          .send({payload: encryptedPayload})
-
-          .end(function(err, response) {
-            if (err) return console.error(err);
-            console.log(response);
-          });
-    });
+          uploadPayload(order);
+      });
+    } else {
+      uploadPayload(order);
+    };
   }
 };

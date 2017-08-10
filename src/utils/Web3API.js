@@ -7,7 +7,7 @@ function retrieveOrder(index, callback) {
   var orders = [];
 
   var contract = new window.web3.eth.Contract(interfaces.registrarInterface);
-  contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen BuyItNow
+  contract.options.address = "0x59b18ece115c3a9c8131e41a5da89b570f6de55e"; // Ropsen BuyItNow
 
   contract.methods.getOrder(index.toString()).call({}, function(error, result) {
     var state = "open";
@@ -55,7 +55,7 @@ function eachAsync(array, f, callback) {
 module.exports = {
   retrieveTransactions: function() {
     var contract = new window.web3.eth.Contract(interfaces.registrarInterface);
-    contract.options.address = "0xbb352b1766e4bcae93d612087bade0bd1350ecea"; // Ropsen BuyItNow
+    contract.options.address = "0x59b18ece115c3a9c8131e41a5da89b570f6de55e"; // Ropsen BuyItNow
 
     contract.methods.getOrderCount().call({}, function(error, result) {
       var index = result - 1;
