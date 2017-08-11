@@ -50,7 +50,7 @@ function SearchResultItem(props) {
     <li>
       <div>
         <label>
-          {item.title} {button}
+          {item.title} | {item.price} | {button}
         </label>
       </div>
     </li>

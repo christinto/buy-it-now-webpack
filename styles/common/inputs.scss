@@ -20,3 +20,34 @@ input[type="text"] {
 input[type="text"]:focus {
   outline: none;
 }
+.country-dropdown select {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 1em;
+}
+.region-dropdown select {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 1em;
+}
+
+select.dropdown {
+  margin: 0px;
+  margin-bottom: 1em;
+  width: 42em;
+  // border-width: 1px;
+  // border-style: solid;
+  // border-color: #666666;
+  padding: 4px;
+  color: #ffffff;
+  background: #62cbd5;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  -moz-appearance: none;
+  appearance: none;
+  text-align-last: center;
+  // background: url('yoururl/dropdown.png') no-repeat 97% 50% #ffffff;
+  // background-size: 11px 7px;
+}
+
+.shipping-form input[type="text"] {
+  margin-bottom: 0.5em;
+}

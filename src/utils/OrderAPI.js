@@ -115,5 +115,18 @@ module.exports = {
     } else {
       uploadPayload(order);
     };
+  },
+  pullHistory: function() {
+    if (localStorage.getItem('identifier') === null) {
+
+    } else {
+      var identifier = localStorage.getItem('identifier');
+      request.get('http://buyitnow.us-west-2.elasticbeanstalk.com/history/' + identifier)
+        .end(function(err, response) {
+          if (err) return console.error(err);
+          var jsonObject = JSON.parse(response.text);
+          console.log(jsonObject);
+      });
+    }
   }
 };

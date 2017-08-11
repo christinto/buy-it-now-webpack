@@ -10,6 +10,7 @@ import ShoppingCart from '../components/ShoppingCart';
 
 import SearchActions from '../actions/SearchActions';
 
+
 function AppView(props) {
   return (
     <div>
@@ -38,35 +39,6 @@ function Header(props) {
     </header>
   );
 }
-
-const ENTER_KEY_CODE = 13;
-function NewOrder(props) {
-  const addOrder = () => props.onAdd(props.draft);
-  const onBlur = () => addOrder();
-
-  const onChange = (event) => props.onUpdateDraft(event.target.value);
-
-  const onKeyDown = (event) => {
-    if (event.keyCode === ENTER_KEY_CODE) {
-      addOrder();
-    }
-  };
-  return (
-    <div>
-      <input
-        type="text"
-        autoFocus={true}
-        id="new-order"
-        placeholder="Item Name"
-        value={props.draft}
-        onBlur={onBlur}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-      />
-      <br />
-    </div>
-  );
-};
 
 function Main(props) {
   if (props.orders.size === 0) {
